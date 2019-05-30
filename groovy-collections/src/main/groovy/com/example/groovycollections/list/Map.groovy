@@ -4,7 +4,7 @@ class Map {
     public static void main(String[] args) {
         def map = ['name':"oanh pham", 'likes':'Onepiece', 'age': 21]
        // assert map.get('name') =='oanhpham'  // check false expect: oanh pham
-        assert map.get('name').toString().contains('oanh') // done
+        println map.get('name').toString().contains('oanh') // done
 
         //-----------------------------------------------
         def ob1 = [:]
@@ -71,6 +71,7 @@ class Map {
         arr.groupBy {
             it ->  it.class
         }
+        println listStudent.groupBy {it -> it.value.mark}
         def entriesStudent = listStudent.entrySet()
         entriesStudent.each {
             it -> println it.value
