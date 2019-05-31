@@ -6,60 +6,51 @@ import spock.lang.Specification
 
 class ListSpec extends Specification {
     @Shared
-    def list = [2,4,7,9,1,10]
-    def " tao 1 list moi tu 1 list da co san " () {
-        when:
-        List<Integer> list1 = new ArrayList<Integer>(list)
-        List<String> list2 = list.clone() // it parses integer type to string
-        then:
-        list1 == list
-        list2 == list
+    List<Integer> list = [2, 4, 7, 9, 1, 10]
 
+    void " trả về kích cỡ của list "() {
+        expect:
+        list.size() == 6
     }
 
-    def " lay kich co cua list"() {
-        when:
-        def size = list.size()
-        then:
-        size == 6
-    }
-    def " cai dat data cho list" () {
-        def list2 = list.clone()
+    void " setup data cho list"() {
+        List<Integer> list2 = list
         when:
         list2[2] = 9
-        list2.set(1,5)
-        list2.putAt(1,3)
+        list2.set(1, 5)
+        list2.putAt(1, 2)
         then:
-        list2 == [2,3,9,9,1,10]
+        list2 == [2, 3, 9, 9, 1, 10]
     }
-    def "1 list co the hon tap bien"() {
+
+    void " lấy max list"() {
         expect:
-        a == b
-        where:
-        a           | b
-        [1,2,false] | [1,2,false]
-        ['a','c']   | ['a','b']
+        list.max() == 10
+        list.min() == 1
     }
-    def " lay max list" () {
-        def t, f
+
+    void " thêm bớt list "() {
+
+        List list1, list2
+
         when:
-        Comparator mc = { a,b -> a==b ? 0 :(a<b? -1: 1)}
-        t = list.max(mc)
-        f = list.min(mc)
+        list1 = list + [1, 2, 5]
+        list2 = list - 10 // remove all elem = 10
+
         then:
-        t == 10
-        f == 1
+        list1 == [2, 4, 7, 9, 1, 10, 1, 2, 5]
+        list2 == [2, 4, 7, 9, 1]
     }
-    def " add sub list" () {
-        def list1 , list2
 
-        when :
-        list1= list.clone()+ [1,2,5]
-        list2 = list.clone() - 10 // remove all elem = 10
+    void " tính tong list "() {
+        expect:
+        list.sum() == 33
+    }
 
-        then:
-        list1 == [2,4,7,9,1,10,1,2,5]
-        list2 == [2,4,7,9,1,]
+    void " sắp xếp list "() {
+        expect:
+        list.sort() == [1, 2, 4, 7, 9, 10]
+
     }
 
 }

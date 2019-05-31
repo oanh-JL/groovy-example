@@ -1,67 +1,80 @@
 package com.example.groovycollections
 
-import spock.lang.Shared
 import spock.lang.Specification
 
 class MapSpec extends Specification {
-    @Shared
-    Map student = [name:'oanh', age: 21, mark : 9]
-    def listStudent = [
-            1 : [name: 'oanh', age : 21, mark: 10],
-            2 : [name: 'ly', age : 20, mark: 10],
-            3: [name: 'bin', age : 5, mark: 9],
-            4 : [name: 'Ba', age : 45, mark: 8]
+
+    Map student = [name: 'oanh', age: 21, mark: 9]
+
+    Map mapStudent = [
+            1: [name: 'oanh', age: 21, mark: 10],
+            2: [name: 'ly', age: 20, mark: 10],
+            3: [name: 'bin', age: 5, mark: 9],
+            4: [name: 'Ba', age: 45, mark: 8]
     ]
-    def "get key to compare" () {
-        given:
-        def name
-        when:
-        name = student.get('name')
-        then:
-        name == 'oanh'
+
+
+    void " so sánh tên "() {
+
+        expect:
+        student.get('name') == 'oanh'
     }
-    def " mess map" () {
-        given:
-        def messObj = [
-                simple: [1,4,7],
-                complex: [age:24, mark:5]
+
+    void " map hỗn tạp "() {
+
+        Map messObj = [
+                simple : [1, 4, 7],
+                complex: [age: 24, mark: 5]
         ]
-        def sp, cp
-        when:
-        sp = messObj.simple.clone()
-        cp = messObj.complex.clone()
-        then:
-        sp == [1,4,7]
-        cp == [age:24, mark:5]
+        expect:
+        messObj.simple == [1, 4, 7]
+        messObj.complex == [age: 24, mark: 5]
     }
-    def " tim kiem trong list" () {
-        def findAll, nameST
+
+    void " tìm kiếm trong list "() {
+
+        Map findAll
+        List<String> nameStudent
         when:
-        findAll = listStudent.findAll {
-            it.value.mark == 10
-        }
-        nameST = listStudent.findAll {it , st -> st.mark == 10 }.collect {it, st -> st.get('name') }
+        findAll = mapStudent.findAll { it.value.mark == 10 }
+        nameStudent = mapStudent
+                .findAll { it, st -> st.mark == 10 }
+                .collect { it, st -> st.get('name') }
         then:
-        findAll == [1:[name:'oanh', age:21, mark:10], 2:[name:'ly', age:20, mark:10]]
-        nameST ==['oanh','ly']
+        findAll == [1: [name: 'oanh', age: 21, mark: 10], 2: [name: 'ly', age: 20, mark: 10]]
+        nameStudent == ['oanh', 'ly']
     }
-    def "group by student"(){
-        def groupByST
+
+    void " group by student "() {
+
+        Map groupByStudent
         when:
-        groupByST = listStudent.groupBy {
-            it -> it.value.mark
-        }
+        groupByStudent = mapStudent.groupBy { it.value.mark }
         then:
-        groupByST ==  [10:[1:[name:'oanh', age:21, mark:10], 2:[name:'ly', age:20, mark:10]], 9:[3:[name:'bin', age:5, mark:9]], 8:[4:[name:'Ba', age:45, mark:8]]]
+        groupByStudent == [10: [1: [name: 'oanh', age: 21, mark: 10],
+                                2: [name: 'ly', age: 20, mark: 10]],
+                           9 : [3: [name: 'bin', age: 5, mark: 9]],
+                           8 : [4: [name: 'Ba', age: 45, mark: 8]]]
 
     }
-    def " split student"() {
+
+    void " split student "() {
+
         given:
-        def st = "name:oanh mark:10"
-        when :
-        st = st.split(" ")
+        String Student = " name:oanh mark:10 "
+        expect:
+        Student.split(" ") == ["name:oanh", "mark:10"]
+    }
+
+    void " collect entries "() {
+
+        Map collectEntries
+        when:
+        collectEntries = mapStudent.collectEntries([:]) { id, student ->
+                            [(student.name.toString().toUpperCase()): student.mark * 0.4] }
         then:
-        st == ["name:oanh","mark:10"]
+        collectEntries ==
+                ['OANH': 4.0, 'LY': 4.0, 'BIN': 3.6, 'BA': 3.2]
     }
 
 
