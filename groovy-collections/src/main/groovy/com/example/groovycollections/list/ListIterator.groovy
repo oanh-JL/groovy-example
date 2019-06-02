@@ -1,5 +1,8 @@
 package com.example.groovycollections.list
 
+import java.util.function.Function
+import java.util.stream.Collectors
+
 class ListIterator {
        public static void main(String[] args) {
            def list1= ['a', 'b', 'c']
@@ -70,5 +73,6 @@ class ListIterator {
            //----------------------------------------
             list -= 10 // remove all elem value = 10
            println list
-    }
+
+       }
 }

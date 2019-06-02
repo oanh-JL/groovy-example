@@ -60,6 +60,7 @@ class Map {
         println listStudent.findAll {
             it.value.mark == 10
         }
+        println listStudent.getClass()
 
         def nameOfStudent = listStudent.findAll {it, st ->
             st.mark == 10

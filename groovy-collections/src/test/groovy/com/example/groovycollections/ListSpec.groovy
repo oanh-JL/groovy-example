@@ -1,16 +1,14 @@
 package com.example.groovycollections
 
-import spock.lang.Shared
 import spock.lang.Specification
 
 
 class ListSpec extends Specification {
-    @Shared
-    List<Integer> list = [2, 4, 7, 9, 1, 10]
+    final List<Integer> LIST = [2, 4, 7, 9, 1, 10]
 
     void " trả về kích cỡ của list "() {
         expect:
-        list.size() == 6
+        LIST.size() == 6
     }
 
     void " setup data cho list"() {
@@ -25,8 +23,8 @@ class ListSpec extends Specification {
 
     void " lấy max list"() {
         expect:
-        list.max() == 10
-        list.min() == 1
+        LIST.max() == 10
+        LIST.min() == 1
     }
 
     void " thêm bớt list "() {
@@ -34,8 +32,8 @@ class ListSpec extends Specification {
         List list1, list2
 
         when:
-        list1 = list + [1, 2, 5]
-        list2 = list - 10 // remove all elem = 10
+        list1 = LIST + [1, 2, 5]
+        list2 = LIST - 10 // remove all elem = 10
 
         then:
         list1 == [2, 4, 7, 9, 1, 10, 1, 2, 5]
@@ -44,13 +42,18 @@ class ListSpec extends Specification {
 
     void " tính tong list "() {
         expect:
-        list.sum() == 33
+        LIST.sum() == 33
     }
 
     void " sắp xếp list "() {
         expect:
-        list.sort() == [1, 2, 4, 7, 9, 10]
+        LIST.sort() == [1, 2, 4, 7, 9, 10]
 
+    }
+
+    void " collect list "() {
+        expect:
+        LIST.collect { it * 2 } == [4, 8, 14, 18, 2, 20]
     }
 
 }

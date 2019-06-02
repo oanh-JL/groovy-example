@@ -1,18 +1,21 @@
 package com.example.groovycollections
 
+import com.example.groovycollections.list.Map
 import spock.lang.Specification
+import java.util.stream.Collectors
 
 class MapSpec extends Specification {
 
     Map student = [name: 'oanh', age: 21, mark: 9]
 
-    Map mapStudent = [
+      Map mapStudent = [
             1: [name: 'oanh', age: 21, mark: 10],
             2: [name: 'ly', age: 20, mark: 10],
             3: [name: 'bin', age: 5, mark: 9],
             4: [name: 'Ba', age: 45, mark: 8]
     ]
 
+    List<Student> lstStudent = new ArrayList<>()
 
     void " so sánh tên "() {
 
@@ -51,10 +54,14 @@ class MapSpec extends Specification {
         when:
         groupByStudent = mapStudent.groupBy { it.value.mark }
         then:
-        groupByStudent == [10: [1: [name: 'oanh', age: 21, mark: 10],
-                                2: [name: 'ly', age: 20, mark: 10]],
-                           9 : [3: [name: 'bin', age: 5, mark: 9]],
-                           8 : [4: [name: 'Ba', age: 45, mark: 8]]]
+        groupByStudent == [
+                10: [
+                        1: [name: 'oanh', age: 21, mark: 10],
+                        2: [name: 'ly', age: 20, mark: 10]
+                ],
+                9 : [3: [name: 'bin', age: 5, mark: 9]],
+                8 : [4: [name: 'Ba', age: 45, mark: 8]]
+        ]
 
     }
 
@@ -71,7 +78,8 @@ class MapSpec extends Specification {
         Map collectEntries
         when:
         collectEntries = mapStudent.collectEntries([:]) { id, student ->
-                            [(student.name.toString().toUpperCase()): student.mark * 0.4] }
+            [(student.name.toString().toUpperCase()): student.mark * 0.4]
+        }
         then:
         collectEntries ==
                 ['OANH': 4.0, 'LY': 4.0, 'BIN': 3.6, 'BA': 3.2]
