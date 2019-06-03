@@ -1,4 +1,4 @@
-package oop.abstract_demo
+package oop
 
 class AnimalAbstract  {
 

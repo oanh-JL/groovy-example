@@ -1,4 +1,4 @@
-package oop.abstract_demo
+package oop
 
 class AnimalInterface {
 
@@ -39,5 +39,6 @@ class AnimalInterface {
         myBird.fly()
         println "my bird have ${Bird.legs} legs"
         println "my bird have ${Bird.outerCovering}"
+
     }
 }
